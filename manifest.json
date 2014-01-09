@@ -1,0 +1,18 @@
+{
+"manifest_version": 2,
+
+"name": "Basketball Reference DFS ",
+"description": "Show DFS Points next to Player Stat Tables",
+"version": "1.0",
+
+"content_scripts": [
+{
+  "matches": ["http://www.basketball-reference.com/players/*", "https://www.basketball-reference.com/players/*"],
+  "js": ["jquery-2.0.3.min.js", "myscript.js"]
+}
+],
+
+"web_accessible_resources": [
+  "jquery-2.0.3.min.map"
+]
+}
