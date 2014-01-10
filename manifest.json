@@ -8,7 +8,7 @@
 "content_scripts": [
 {
   "matches": ["http://www.basketball-reference.com/players/*", "https://www.basketball-reference.com/players/*", "https://www.basketball-reference.com/teams/*", "http://www.basketball-reference.com/teams/*"],
-  "js": ["jquery-2.0.3.min.js", "myscript.js"]
+  "js": ["jquery-2.0.3.min.js", "baller.js"]
 }
 ],
 
