@@ -39,7 +39,8 @@ $(document).ready(function() {
     var doublesSum = doubles.reduce(function (a,b) { return a + b });
     var dkBonus = checkBonus(doublesSum);
     var dk = (pts + (1.5*ast) + (2*stl) + (2*blk) - (.5*tov) + (1.25*reb) + (.5*tpt) + dkBonus).toFixed(2);
-    $(this).append("<td>" + fd + "</td>" + "<td>" + ds + "</td>" + "<td>" + dk + "</td>");
+    var ss = (pts + (1.5*ast) + (1.25*reb) + (2*blk) + (2* stl) - tov).toFixed(2);
+    $(this).append("<td>" + fd + "</td>" + "<td>" + ds + "</td>" + "<td>" + dk + "</td>" + "<td>" + ss + "</td>");
   });
 });
 
