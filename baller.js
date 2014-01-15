@@ -1,4 +1,3 @@
-console.log("Test!");
 var checkDouble = function (stat) {
   if ( stat >= 10 ) {
     return 1;
