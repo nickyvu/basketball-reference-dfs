@@ -28,7 +28,7 @@ var checkBonus = function (x) {
   }
 }
 $(document).ready(function() {
-  $('#per_minute thead tr, #per_game thead tr, #pgl_basic thead tr').append('<th>FD</th><th>DS</th><th>DK</th><th>SS</th>');
+  $('#per_minute thead tr, #per_game thead tr, #pgl_basic thead tr, #stats thead tr').append('<th>FD</th><th>DS</th><th>DK</th><th>SS</th>');
   $('#per_minute tbody tr, #per_minute tfoot tr, #per_game tbody tr, #per_game tfoot tr').each(function(index){
     var pts = Number($(this).find('td:nth-last-child(1)').text());
     var ast = Number($(this).find('td:nth-last-child(6)').text());
@@ -49,6 +49,29 @@ $(document).ready(function() {
     var dkBonus = checkBonus(doublesSum);
     var dk = (pts + (1.5*ast) + (2*stl) + (2*blk) - (.5*tov) + (1.25*reb) + (.5*tpt) + dkBonus).toFixed(2);
     var ss = (pts + (1.5*ast) + (1.25*reb) + (2*blk) + (2* stl) - tov).toFixed(2);
+    $(this).append("<td>" + fd + "</td>" + "<td>" + ds + "</td>" + "<td>" + dk + "</td>" + "<td>" + ss + "</td>");
+  });
+  $('#stats tbody tr').each(function(index){
+    var pts = Number($(this).find('td:nth-last-child(12)').text());
+    var ast = Number($(this).find('td:nth-last-child(17)').text());
+    var stl = Number($(this).find('td:nth-last-child(16)').text());
+    var blk = Number($(this).find('td:nth-last-child(15)').text());
+    var tov = Number($(this).find('td:nth-last-child(14)').text());
+    var reb = Number($(this).find('td:nth-last-child(18)').text());
+    var fga = Number($(this).find('td:nth-last-child(24)').text());
+    var fgm = Number($(this).find('td:nth-last-child(25)').text());
+    var fta = Number($(this).find('td:nth-last-child(20)').text());
+    var ftm = Number($(this).find('td:nth-last-child(21)').text());
+    var tpt = Number($(this).find('td:nth-last-child(23)').text());
+    var games = Number($(this).find('td:nth-last-child(28)').text());
+    var fd = ((pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.2*reb))/games).toFixed(2);
+    var ds = ((pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.25*reb) - (.5*(fga-fgm)) - (.5*(fta-ftm)))/games).toFixed(2);
+    var stats = [pts/games, ast/games, stl/games, blk/games, reb/games];
+    var doubles = stats.map(checkDouble);
+    var doublesSum = doubles.reduce(function (a,b) { return a + b });
+    var dkBonus = checkBonus(doublesSum);
+    var dk = ((pts + (1.5*ast) + (2*stl) + (2*blk) - (.5*tov) + (1.25*reb) + (.5*tpt) + dkBonus)/games).toFixed(2);
+    var ss = ((pts + (1.5*ast) + (1.25*reb) + (2*blk) + (2* stl) - tov)/games).toFixed(2);
     $(this).append("<td>" + fd + "</td>" + "<td>" + ds + "</td>" + "<td>" + dk + "</td>" + "<td>" + ss + "</td>");
   });
   var fd_vals = []; 
