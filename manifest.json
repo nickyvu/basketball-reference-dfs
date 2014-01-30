@@ -3,7 +3,7 @@
 
 "name": "Basketball Reference DFS ",
 "description": "Show DFS Points next to Player Stat Tables",
-"version": "1.0",
+"version": "1.1",
 "icons": { "128": "large.png" },
 
 "content_scripts": [
