@@ -79,17 +79,17 @@ $(document).ready(function() {
   var dk_vals = [];
   var ss_vals = [];
   $("#pgl_basic tbody tr").not(".thead").each(function(index){
-      var pts = Number($(this).find('td:nth-last-child(2)').text());
-      var ast = Number($(this).find('td:nth-last-child(7)').text());
-      var stl = Number($(this).find('td:nth-last-child(6)').text());
-      var blk = Number($(this).find('td:nth-last-child(5)').text());
-      var tov = Number($(this).find('td:nth-last-child(4)').text());
-      var reb = Number($(this).find('td:nth-last-child(8)').text());
-      var fga = Number($(this).find('td:nth-last-child(18)').text());
-      var fgm = Number($(this).find('td:nth-last-child(19)').text());
-      var fta = Number($(this).find('td:nth-last-child(12)').text());
-      var ftm = Number($(this).find('td:nth-last-child(13)').text());
-      var tpt = Number($(this).find('td:nth-last-child(16)').text());
+      var pts = Number($(this).find('td:nth-last-child(3)').text());
+      var ast = Number($(this).find('td:nth-last-child(8)').text());
+      var stl = Number($(this).find('td:nth-last-child(7)').text());
+      var blk = Number($(this).find('td:nth-last-child(6)').text());
+      var tov = Number($(this).find('td:nth-last-child(5)').text());
+      var reb = Number($(this).find('td:nth-last-child(9)').text());
+      var fga = Number($(this).find('td:nth-last-child(19)').text());
+      var fgm = Number($(this).find('td:nth-last-child(20)').text());
+      var fta = Number($(this).find('td:nth-last-child(13)').text());
+      var ftm = Number($(this).find('td:nth-last-child(14)').text());
+      var tpt = Number($(this).find('td:nth-last-child(17)').text());
       var fd = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.2*reb)).toFixed(2);
       fd_vals.push(fd);
       var ds = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.25*reb) - (.5*(fga-fgm)) - (.5*(fta-ftm))).toFixed(2);
