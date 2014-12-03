@@ -1,3 +1,19 @@
+var StatTable = {
+
+  getIndex:  function($row, category) {
+    var selector = "th:contains(" + category + ")";
+    var $table = $row.parent().parent();
+    var idx = $table.find('thead tr:not(.over_header)').first().find(selector).index();
+    console.log(category + ': ' + idx);
+    return idx;
+  },
+
+  getValue: function($row, category) {
+    return Number($row.find('td').eq(this.getIndex($row, category)).text());
+  }
+
+};
+
 function median(values) {
   values.sort( function(a,b) { return a - b; });
   var half = Math.floor(values.length/2);
@@ -30,17 +46,18 @@ var checkBonus = function (x) {
 $(document).ready(function() {
   $('#per_minute thead tr, #per_game thead tr, #pgl_basic thead tr, #stats thead tr').append('<th>FD</th><th>DS</th><th>DK</th><th>SS</th>');
   $('#per_minute tbody tr, #per_minute tfoot tr, #per_game tbody tr, #per_game tfoot tr').each(function(index){
-    var pts = Number($(this).find('td:nth-last-child(1)').text());
-    var ast = Number($(this).find('td:nth-last-child(6)').text());
-    var stl = Number($(this).find('td:nth-last-child(5)').text());
-    var blk = Number($(this).find('td:nth-last-child(4)').text());
-    var tov = Number($(this).find('td:nth-last-child(3)').text());
-    var reb = Number($(this).find('td:nth-last-child(7)').text());
-    var fga = Number($(this).find('td:nth-last-child(20)').text());
-    var fgm = Number($(this).find('td:nth-last-child(21)').text());
-    var fta = Number($(this).find('td:nth-last-child(11)').text());
-    var ftm = Number($(this).find('td:nth-last-child(12)').text());
-    var tpt = Number($(this).find('td:nth-last-child(18)').text());
+    var $row = $(this);
+    var pts = StatTable.getValue($row, 'PTS');
+    var ast = StatTable.getValue($row, 'AST');
+    var stl = StatTable.getValue($row, 'STL');
+    var blk = StatTable.getValue($row, 'BLK');
+    var tov = StatTable.getValue($row, 'TOV');
+    var reb = StatTable.getValue($row, 'TRB');
+    var fga = StatTable.getValue($row, 'FGA');
+    var fgm = StatTable.getValue($row, 'FG');
+    var fta = StatTable.getValue($row, 'FTA');
+    var ftm = StatTable.getValue($row, 'FT');
+    var tpt = StatTable.getValue($row, '3P');
     var fd = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.2*reb)).toFixed(2);
     var ds = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.25*reb) - (.5*(fga-fgm)) - (.5*(fta-ftm))).toFixed(2);
     var stats = [pts, ast, stl, blk, reb];
@@ -55,35 +72,19 @@ $(document).ready(function() {
   var tableHeading = $('.table_heading h2').text();
 
   $('#stats tbody tr').each(function(index){
-    if(tableHeading == "Career Splits") {
-      var pts = Number($(this).find('td:nth-last-child(12)').text());
-      var ast = Number($(this).find('td:nth-last-child(17)').text());
-      var stl = Number($(this).find('td:nth-last-child(16)').text());
-      var blk = Number($(this).find('td:nth-last-child(15)').text());
-      var tov = Number($(this).find('td:nth-last-child(14)').text());
-      var reb = Number($(this).find('td:nth-last-child(18)').text());
-      var fga = Number($(this).find('td:nth-last-child(24)').text());
-      var fgm = Number($(this).find('td:nth-last-child(25)').text());
-      var fta = Number($(this).find('td:nth-last-child(20)').text());
-      var ftm = Number($(this).find('td:nth-last-child(21)').text());
-      var tpt = Number($(this).find('td:nth-last-child(23)').text());
-      var games = Number($(this).find('td:nth-last-child(28)').text());
-    }
-
-    else {
-      var pts = Number($(this).find('td:nth-last-child(13)').text());
-      var ast = Number($(this).find('td:nth-last-child(18)').text());
-      var stl = Number($(this).find('td:nth-last-child(17)').text());
-      var blk = Number($(this).find('td:nth-last-child(16)').text());
-      var tov = Number($(this).find('td:nth-last-child(15)').text());
-      var reb = Number($(this).find('td:nth-last-child(19)').text());
-      var fga = Number($(this).find('td:nth-last-child(25)').text());
-      var fgm = Number($(this).find('td:nth-last-child(26)').text());
-      var fta = Number($(this).find('td:nth-last-child(21)').text());
-      var ftm = Number($(this).find('td:nth-last-child(22)').text());
-      var tpt = Number($(this).find('td:nth-last-child(24)').text());
-      var games = Number($(this).find('td:nth-last-child(29)').text());
-    }
+      var $row = $(this);
+      var pts = StatTable.getValue($row, 'PTS');
+      var ast = StatTable.getValue($row, 'AST');
+      var stl = StatTable.getValue($row, 'STL');
+      var blk = StatTable.getValue($row, 'BLK');
+      var tov = StatTable.getValue($row, 'TOV');
+      var reb = StatTable.getValue($row, 'TRB');
+      var fga = StatTable.getValue($row, 'FGA');
+      var fgm = StatTable.getValue($row, 'FG');
+      var fta = StatTable.getValue($row, 'FTA');
+      var ftm = StatTable.getValue($row, 'FT');
+      var tpt = StatTable.getValue($row, '3P');
+      var games = StatTable.getValue($row, 'G');
     var fd = ((pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.2*reb))/games).toFixed(2);
     var ds = ((pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.25*reb) - (.5*(fga-fgm)) - (.5*(fta-ftm)))/games).toFixed(2);
     var stats = [pts/games, ast/games, stl/games, blk/games, reb/games];
@@ -99,17 +100,18 @@ $(document).ready(function() {
   var dk_vals = [];
   var ss_vals = [];
   $("#pgl_basic tbody tr").not(".thead").each(function(index){
-      var pts = Number($(this).find('td:nth-last-child(3)').text());
-      var ast = Number($(this).find('td:nth-last-child(8)').text());
-      var stl = Number($(this).find('td:nth-last-child(7)').text());
-      var blk = Number($(this).find('td:nth-last-child(6)').text());
-      var tov = Number($(this).find('td:nth-last-child(5)').text());
-      var reb = Number($(this).find('td:nth-last-child(9)').text());
-      var fga = Number($(this).find('td:nth-last-child(19)').text());
-      var fgm = Number($(this).find('td:nth-last-child(20)').text());
-      var fta = Number($(this).find('td:nth-last-child(13)').text());
-      var ftm = Number($(this).find('td:nth-last-child(14)').text());
-      var tpt = Number($(this).find('td:nth-last-child(17)').text());
+      var $row = $(this);
+      var pts = StatTable.getValue($row, 'PTS');
+      var ast = StatTable.getValue($row, 'AST');
+      var stl = StatTable.getValue($row, 'STL');
+      var blk = StatTable.getValue($row, 'BLK');
+      var tov = StatTable.getValue($row, 'TOV');
+      var reb = StatTable.getValue($row, 'TRB');
+      var fga = StatTable.getValue($row, 'FGA');
+      var fgm = StatTable.getValue($row, 'FG');
+      var fta = StatTable.getValue($row, 'FTA');
+      var ftm = StatTable.getValue($row, 'FT');
+      var tpt = StatTable.getValue($row, '3P');
       var fd = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.2*reb)).toFixed(2);
       fd_vals.push(fd);
       var ds = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.25*reb) - (.5*(fga-fgm)) - (.5*(fta-ftm))).toFixed(2);
@@ -132,28 +134,20 @@ $(document).ready(function() {
   if ( url.split('/')[3] == "boxscores" ) {
     $('table').each(function() {
       if ( $(this).attr('id') != undefined && $(this).attr('id').split('_')[1] == "basic" ) {
-        $table = $(this);
-        var getIndex = function(category) {
-            var selector = 'th[data-stat=' + category + ']';
-            return $table.find('thead tr:not(.over_header)').first().find(selector).index();
-        }
-        var getValue = function($row, category) {
-            return Number($row.find('td').eq(getIndex(category)).text());
-        }
         $(this).find('thead tr').not('.over_header').append('<th>FD</th><th>DS</th><th>DK</th><th>SS</th>');
         $(this).find('tbody tr, tfoot tr').not('.thead').each(function(index){
           var $row = $(this);
-          var pts = getValue($row, 'pts');
-          var ast = getValue($row, 'ast');
-          var stl = getValue($row, 'stl');
-          var blk = getValue($row, 'blk');
-          var tov = getValue($row, 'tov');
-          var reb = getValue($row, 'trb');
-          var fga = getValue($row, 'fga');
-          var fgm = getValue($row, 'fg');
-          var fta = getValue($row, 'fta');
-          var ftm = getValue($row, 'ft');
-          var tpt = getValue($row, 'fg3');
+          var pts = StatTable.getValue($row, 'PTS');
+          var ast = StatTable.getValue($row, 'AST');
+          var stl = StatTable.getValue($row, 'STL');
+          var blk = StatTable.getValue($row, 'BLK');
+          var tov = StatTable.getValue($row, 'TOV');
+          var reb = StatTable.getValue($row, 'TRB');
+          var fga = StatTable.getValue($row, 'FGA');
+          var fgm = StatTable.getValue($row, 'FG');
+          var fta = StatTable.getValue($row, 'FTA');
+          var ftm = StatTable.getValue($row, 'FT');
+          var tpt = StatTable.getValue($row, '3P');
           var fd = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.2*reb)).toFixed(2);
           var ds = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.25*reb) - (.5*(fga-fgm)) - (.5*(fta-ftm))).toFixed(2);
           var stats = [pts, ast, stl, blk, reb];
