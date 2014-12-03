@@ -3,7 +3,7 @@
 
 "name": "RotoGrinders Basketball Reference",
 "description": "Show DFS Points next to Player Stat Tables",
-"version": "1.2",
+"version": "1.3",
 "icons": { "128": "large.png" },
 
 "content_scripts": [
