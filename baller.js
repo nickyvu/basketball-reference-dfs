@@ -132,19 +132,28 @@ $(document).ready(function() {
   if ( url.split('/')[3] == "boxscores" ) {
     $('table').each(function() {
       if ( $(this).attr('id') != undefined && $(this).attr('id').split('_')[1] == "basic" ) {
+        $table = $(this);
+        var getIndex = function(category) {
+            var selector = 'th[data-stat=' + category + ']';
+            return $table.find('thead tr:not(.over_header)').first().find(selector).index();
+        }
+        var getValue = function($row, category) {
+            return Number($row.find('td').eq(getIndex(category)).text());
+        }
         $(this).find('thead tr').not('.over_header').append('<th>FD</th><th>DS</th><th>DK</th><th>SS</th>');
         $(this).find('tbody tr, tfoot tr').not('.thead').each(function(index){
-          var pts = Number($(this).find('td:nth-last-child(2)').text());
-          var ast = Number($(this).find('td:nth-last-child(7)').text());
-          var stl = Number($(this).find('td:nth-last-child(6)').text());
-          var blk = Number($(this).find('td:nth-last-child(5)').text());
-          var tov = Number($(this).find('td:nth-last-child(4)').text());
-          var reb = Number($(this).find('td:nth-last-child(8)').text());
-          var fga = Number($(this).find('td:nth-last-child(18)').text());
-          var fgm = Number($(this).find('td:nth-last-child(19)').text());
-          var fta = Number($(this).find('td:nth-last-child(12)').text());
-          var ftm = Number($(this).find('td:nth-last-child(13)').text());
-          var tpt = Number($(this).find('td:nth-last-child(16)').text());
+          var $row = $(this);
+          var pts = getValue($row, 'pts');
+          var ast = getValue($row, 'ast');
+          var stl = getValue($row, 'stl');
+          var blk = getValue($row, 'blk');
+          var tov = getValue($row, 'tov');
+          var reb = getValue($row, 'trb');
+          var fga = getValue($row, 'fga');
+          var fgm = getValue($row, 'fg');
+          var fta = getValue($row, 'fta');
+          var ftm = getValue($row, 'ft');
+          var tpt = getValue($row, 'fg3');
           var fd = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.2*reb)).toFixed(2);
           var ds = (pts + (1.5*ast) + (2*stl) + (2*blk) - tov + (1.25*reb) - (.5*(fga-fgm)) - (.5*(fta-ftm))).toFixed(2);
           var stats = [pts, ast, stl, blk, reb];
